@@ -1,0 +1,24 @@
+{
+  "name": "active-citizen-web",
+  "version": "1.0.0",
+  "description": "Проектная работа студентов 2 курса ИРИТ-РтФ в рамках ПП",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Uzbagoitel777/active-citizen-web.git"
+  },
+  "author": "Uzbagoitel777 & zkim73895",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.21.1",
+    "sqlite3": "^5.1.7"
+  },
+  "bugs": {
+    "url": "https://github.com/Uzbagoitel777/active-citizen-web/issues"
+  },
+  "homepage": "https://github.com/Uzbagoitel777/active-citizen-web#readme"
+}
