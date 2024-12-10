@@ -30,6 +30,43 @@ let db = new sqlite3.Database("active-citizen-web.db",  (err) => {
     res.json({ message: 'Yes the API works' });
   });
 
+  app.post('/api/register', (req, res) => {
+    const {username, login, password} = req.body;
+    if (!username || !login || !password){
+      return res.status(400).json({success: false, error: 'Missing required fields'});
+    }
+  
+    const checkEmailQuery = "SELECT login FROM users WHERE login = ?";
+    db.get(checkEmailQuery, [login], (err, row) =>{
+      if (err) {
+          console.log(err);
+          return res.status(500).json({success: false,  error: 'Database error'});
+      }
+      if (row){
+        return res.status(409).json({success: false, error: 'Email already exists'});
+      }
+  
+      bcrypt.hash(password, saltRounds, (err, hash) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ success: false, error: 'Password hashing failed' });
+        }
+  
+        const insertQuery = `
+            INSERT INTO users (name, login, password, type) 
+            VALUES (?, ?, ?, 1)
+        `;
+        db.run(insertQuery, [username, login, hash], (err) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ success: false, error: 'Database error' });
+            }
+            res.json({ success: true, message: 'Registration successful' });
+        });
+    });
+    });
+  });
+
   app.listen(port, () => {
     console.log(`Server started on port ${port}`);
   });
